@@ -1,8 +1,14 @@
+import "reflect-metadata";
 import express, { Request, Response, NextFunction } from "express";
+import './infra/database/prisma.service'
+
+import { router } from "./routes";
 
 const app = express();
 
 app.use(express.json());
+
+app.use(router)
 
 app.use(
   (err: Error, request: Request, response: Response, next: NextFunction) => {
