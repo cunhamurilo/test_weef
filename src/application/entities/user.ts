@@ -39,7 +39,7 @@ export class User {
     }   
 
     public get password(): string {
-        return this.props.password || ''
+        return this.props.password
     }  
 
     public set updated_at (updated_at: Date) {

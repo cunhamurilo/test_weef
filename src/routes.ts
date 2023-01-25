@@ -1,9 +1,10 @@
 import { Router } from "express";
+import { getParkingRoutes } from "./infra/http/routes/parking.routes";
 import { getUserRoutes } from "./infra/http/routes/user.routes";
 
 const router = Router();
 
-// rotas do usuário
 getUserRoutes(router)
+getParkingRoutes(router)
 
 export { router };

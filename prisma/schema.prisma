@@ -16,14 +16,14 @@ model User {
 }
 
 model Parking {
-  id                     Int      @id @default(autoincrement())
+  id                     Int       @id @default(autoincrement())
   license_plate          String
   entry_time             DateTime
-  exit_time              DateTime
-  time_parked_in_minutes Int
-  value_to_pay           Float
-  amount_paid            Float
-  discount               Float
+  exit_time              DateTime?
+  time_parked_in_minutes Int?
+  value_to_pay           Float?
+  amount_paid            Float?
+  discount               Float?
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
