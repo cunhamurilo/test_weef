@@ -18,17 +18,20 @@ export class UseCase8 {
     async execute(request: UC8Request): Promise<UC8Response> {
         const { license_plate, amount_paid, token } = request
 
+        // verifica o token
         const checkToken = await this.authRepositoty.ensureAuthenticate('Bearer '+token || '')
         if(!checkToken){
             throw new NotAuthenticate()
         }
 
+        // verifica se existe um veiculo estacionado
         const parkingAlreadExists = await this.parkingRepository.findByLicencePlate(license_plate);
     
         if (!parkingAlreadExists) {
             throw new CarNotExists()
         }
 
+        // verifica se existe um valor a ser pago
         if(
             parkingAlreadExists.value_to_pay === 0 || 
             parkingAlreadExists.value_to_pay === null || 
@@ -37,10 +40,12 @@ export class UseCase8 {
             throw new DifferentValueToPay()
         }
 
+        // verifica se o valor pago é menor do que o cobrado
         if(parkingAlreadExists.value_to_pay > amount_paid ){
             throw new DifferentAmount()
         }
 
+        // realiza o calculo do desconto
         parkingAlreadExists.amount_paid = amount_paid
         let calculated_parking = await this.parkingRepository.payment(parkingAlreadExists)
 

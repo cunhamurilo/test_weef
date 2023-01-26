@@ -19,11 +19,13 @@ export class UseCase6 {
     async execute(request: UC6Request): Promise<UC6Response> {
         const { license_plate, token } = request
 
+        // verifica se o token é valido
         const checkToken = await this.authRepositoty.ensureAuthenticate('Bearer '+token || '')
         if(!checkToken){
             throw new NotAuthenticate()
         }
 
+        // encontra o veiculo pela placa
         const parkingAlreadExists = await this.parkingRepository.findByLicencePlate(license_plate);
     
         if (parkingAlreadExists) {
@@ -35,6 +37,7 @@ export class UseCase6 {
             entry_time: new Date()
         })
 
+        // faz a entrada do veiculo
         await this.parkingRepository.entry(parking)
 
         return {

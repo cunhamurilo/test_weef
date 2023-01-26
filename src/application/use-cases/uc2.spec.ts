@@ -8,6 +8,7 @@ describe('Update user', () => {
         const usersRepository = new InMemoryUsersRepository()
         const uc2 = new UseCase2(usersRepository)
 
+        // cria um usuário
         const user = new User({
             username: 'teste@teste.com',
             password: "12345"
@@ -28,6 +29,7 @@ describe('Update user', () => {
         const usersRepository = new InMemoryUsersRepository()
         const uc2 = new UseCase2(usersRepository)
 
+        // cria um usuário
         const user = new User({
             username: 'teste@teste.com',
             password: "12345"
@@ -35,6 +37,7 @@ describe('Update user', () => {
 
         await usersRepository.create(user)
 
+        // cria um segundo usuário
         const user2 = new User({
             username: 'teste2@teste.com',
             password: "12345"
@@ -42,6 +45,7 @@ describe('Update user', () => {
 
         await usersRepository.create(user2)
 
+        // verifica se não pode atualizar um novo usuário com username já existente
         expect(() => {
             return uc2.execute({
                 username: 'teste2@teste.com',

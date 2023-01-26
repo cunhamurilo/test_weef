@@ -7,11 +7,13 @@ describe('Create user', () => {
         const usersRepository = new InMemoryUsersRepository()
         const uc1 = new UseCase1(usersRepository)
         
-        const user = await uc1.execute({
+        // cria um usuário
+        await uc1.execute({
             username: 'teste@teste.com',
             password: "12345"
         })
     
+        // verifica se cadastrou um usuário
         expect(usersRepository.users.length).toEqual(1)
     })
 
@@ -19,11 +21,13 @@ describe('Create user', () => {
         const usersRepository = new InMemoryUsersRepository()
         const uc1 = new UseCase1(usersRepository)
         
+        // cria um usuário
         await uc1.execute({
             username: 'teste@teste',
             password: "12345"
         })
     
+        // tenta criar um usuário com o mesmo username
         expect(() => {
             return uc1.execute({
                 username: 'teste@teste',

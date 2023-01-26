@@ -7,6 +7,9 @@ import { PrismaParkingMapper } from "../../database/mappers/prisma-parking-mappe
 const prisma = new PrismaClient()
 
 class ParkingController {
+
+  // controlador que verifica se um veiculo já está estacionado 
+  // para colocar a entrada do veiculo
   async entry(request: Request, response: Response) {
     const { license_plate, entry_time } = request.body;
 
@@ -23,6 +26,10 @@ class ParkingController {
     return response.status(201).json(parking); 
   }
 
+  // controlador que verifica se um veiculo já está estacionado,
+  // verifica se foi realizado um pagamento do veiculo,
+  // verifica se o veiculo ja saiu do estacionamento
+  // para dar a saida do veiculo
   async exit(request: Request, response: Response){
     const { license_plate, exit_time } = request.body;
 
@@ -51,6 +58,10 @@ class ParkingController {
     return response.status(200).json(parking); 
   }
 
+  // controlador que verifica se um veiculo já está estacionado,
+  // verifica se já consultou o valor a pagar,
+  // verifica se já efetuou um pagamento anterior e
+  // verifica se o valor pago é menor que o cobrado
   async payment(request: Request, response: Response){
     const { license_plate, amount_paid } = request.body;
 
@@ -83,6 +94,8 @@ class ParkingController {
     return response.status(200).json(parking)
   }
 
+  // controlador que verifica se um veiculo não está estacionado
+  // para calcular o valor do estacionamento
   async calculate_value(request: Request, response: Response){
     const { license_plate } = request.params;
 

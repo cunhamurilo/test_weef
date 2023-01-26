@@ -17,6 +17,7 @@ export class UseCase1 {
     async execute(request: UC1Request): Promise<UC1Response> {
         const { username, password } = request
 
+        // cria um usuário e verifica se ele já existe
         const userAlreadyExists = await this.usersRepository.findByUsername(username)
 
         if(userAlreadyExists){
@@ -27,6 +28,7 @@ export class UseCase1 {
             username, password
         })
 
+        // salva e retorna esse novo usuário
         await this.usersRepository.create(user)
 
         return {

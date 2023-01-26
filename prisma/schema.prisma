@@ -7,6 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// modelo de usuário
 model User {
   id         Int      @id @default(autoincrement())
   username   String   @unique
@@ -15,6 +16,7 @@ model User {
   updated_at DateTime @default(now())
 }
 
+// cria o modelo do estacionamento
 model Parking {
   id                     Int       @id @default(autoincrement())
   license_plate          String

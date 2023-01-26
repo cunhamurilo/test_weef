@@ -19,12 +19,14 @@ export class UseCase5 {
     async execute(request: UC5Request): Promise<UC5Response> {
         const { username, password} = request
 
+        // encontra usuário pelo username
         const user = await this.usersRepository.findByUsername(username);
     
         if (!user) {
             throw new UserNotExists()
         }
 
+        // verifica as senhas
         let password_check_hash = await bcrypt.compare(password, user.password)
     
         if(!password_check_hash){

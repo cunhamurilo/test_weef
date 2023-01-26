@@ -14,6 +14,7 @@ export class UseCase4 {
     async execute(request: UC4Request): Promise<UC4Response> {
         const { } = request
 
+        // busca todos os usuários
         const users = await this.usersRepository.findMany()
 
         return {

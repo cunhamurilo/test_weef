@@ -1,6 +1,7 @@
 import { User } from "@application/entities/user";
 
 export class UserViewModel {
+    // formata para mostrar pro usuário
     static toHTTP(user: User) {
         return {
             id: user.id,

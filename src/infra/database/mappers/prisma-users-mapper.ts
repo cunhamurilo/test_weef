@@ -2,6 +2,8 @@ import { User as RawUser } from '@prisma/client'
 import { User } from "../../../application/entities/user";
 
 export class PrismaUserMapper {
+    
+    // formata os dados para inserir no prisma 
     static toPrisma(user: User){
         return {
             id: user.id,
@@ -12,6 +14,7 @@ export class PrismaUserMapper {
         }
     }
 
+    // formata os dados depois de obtido do prisma 
     static toDomain(raw: RawUser): User {
         return new User({
             username: raw.username,

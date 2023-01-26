@@ -8,6 +8,7 @@ describe('Delete user', () => {
         const usersRepository = new InMemoryUsersRepository()
         const uc3 = new UseCase3(usersRepository)
         
+        // cria um usuário
         const user = new User({
             username: 'teste@teste.com',
             password: "12345"
@@ -15,6 +16,7 @@ describe('Delete user', () => {
 
         await usersRepository.create(user)
         
+        // deleta um usuário existente
         await uc3.execute({
             userId: user.id
         })
@@ -26,6 +28,7 @@ describe('Delete user', () => {
         const usersRepository = new InMemoryUsersRepository()
         const uc3 = new UseCase3(usersRepository)
         
+        // tenta deletar um usuário que não existe
         expect(() => {
             return uc3.execute({
                 userId: 0

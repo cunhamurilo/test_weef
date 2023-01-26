@@ -11,11 +11,13 @@ describe('entry register', () => {
 
         const uc6 = new UseCase6(parkingRepository, authRepository)
         
+        // cria um token
         let token = await authRepository.execute(new User({
             username: 'teste@teste.com',
             password: '12345'
         }))
 
+        // registra um veiculo com usuário autenticado
         await uc6.execute({
             license_plate: 'ABC1234',
             token: token.token
@@ -29,8 +31,8 @@ describe('entry register', () => {
         const authRepository = new InMemoryAuthRepository()
 
         const uc6 = new UseCase6(parkingRepository, authRepository)
-        
     
+        // tenta registrar um veiculo sem usuário autenticado
         expect(() => {
             return uc6.execute({
                 license_plate: 'ABC1234',

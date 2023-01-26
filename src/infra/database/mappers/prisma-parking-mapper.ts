@@ -2,6 +2,8 @@ import { Parking as RawParking } from '@prisma/client'
 import { Parking } from "../../../application/entities/parking";
 
 export class PrismaParkingMapper {
+
+    // formata os dados para inserir no prisma 
     static toPrisma(parking: Parking){
         return {
             id: parking.id,
@@ -17,6 +19,7 @@ export class PrismaParkingMapper {
         }
     }
 
+    // formata os dados depois de obtido do prisma 
     static toDomain(raw: RawParking): Parking {
         return new Parking({
             license_plate: raw.license_plate,

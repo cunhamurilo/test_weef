@@ -7,6 +7,7 @@ describe('list user', () => {
         const usersRepository = new InMemoryUsersRepository()
         const uc4 = new UseCase4(usersRepository)
         
+        // cria dois usuários
         let users = [new User({
             username: 'teste@teste.com',
             password: "12345"
@@ -19,6 +20,7 @@ describe('list user', () => {
         
         await Promise.all(promise)
         
+        // lista todos os usuários
         let list_users = await uc4.execute({})
     
         expect(list_users.users).toEqual(expect.arrayContaining(users))

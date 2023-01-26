@@ -7,6 +7,8 @@ import bcrypt  from 'bcrypt'
 const prisma = new PrismaClient()
 
 class AuthController {
+
+  // controlador que faz verificações para autenticar um usuário
   async auth(request: Request, response: Response) {
     const { username, password } = request.body;
     

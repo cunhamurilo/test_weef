@@ -6,6 +6,7 @@ export class InMemoryAuthRepository implements AuthRepository {
     public token: { token: string }
     private example_secret = 'testeweef'
 
+    // função que imita a autenticação
     async execute(user: User): Promise<{ token: string; }> {
       
       // Gerar token
@@ -25,6 +26,7 @@ export class InMemoryAuthRepository implements AuthRepository {
       };
     }
 
+    // função que imita a verifica se o token é válido
     async ensureAuthenticate(authToken: string): Promise<boolean> {
       // Validar se token está preenchido
       if (authToken === '') {

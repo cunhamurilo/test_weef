@@ -1,6 +1,7 @@
 import { Parking } from "@application/entities/parking";
 
 export class ParkingViewModel {
+    // formata para mostrar pro usuário
     static toHTTPEntry(parking: Parking) {
         return {
             id: parking.id,

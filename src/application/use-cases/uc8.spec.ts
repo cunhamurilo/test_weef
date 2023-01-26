@@ -13,18 +13,22 @@ describe('Payment value', () => {
 
         const uc8 = new UseCase8(parkingRepository, authRepository)
 
+        // faz uma entrada de um veiculo com 20 minutos da hora atual
         await parkingRepository.entry(new Parking({
             license_plate: "ABC1234",
             entry_time: new Date(new Date().getTime() - 20*60000)
         }))
         
+        // calcula o valor a pagar
         await parkingRepository.calculate_value(parkingRepository.parking[0])
         
+        // obtem o token de autenticação
         let token = await authRepository.execute(new User({
             username: 'teste@teste.com',
             password: '12345'
         }))
 
+        // verifica se pode cadastrar um pagemento
         let discount = await uc8.execute({
             license_plate: 'ABC1234',
             amount_paid: 25,
@@ -40,6 +44,7 @@ describe('Payment value', () => {
 
         const uc8 = new UseCase8(parkingRepository, authRepository)
 
+        // faz uma entrada de um veiculo com 20 minutos da hora atual
         await parkingRepository.entry(new Parking({
             license_plate: "ABC1234",
             entry_time: new Date(new Date().getTime() - 20*60000)
@@ -47,11 +52,13 @@ describe('Payment value', () => {
 
         await parkingRepository.calculate_value(parkingRepository.parking[0])
         
+        // obtem o token de autenticação
         let token = await authRepository.execute(new User({
             username: 'teste@teste.com',
             password: '12345'
         }))
 
+        // tenta realizar um pagamento com valor de pagamento menor que o cobrado
         expect(() => {
             return uc8.execute({
                 license_plate: 'ABC1234',
@@ -67,6 +74,7 @@ describe('Payment value', () => {
 
         const uc8 = new UseCase8(parkingRepository, authRepository)
         
+        // tenta fazer o pagamento sem autenticação
         expect(() => {
             return uc8.execute({
                 license_plate: 'ABC1234',

@@ -11,8 +11,10 @@ describe('auth user', () => {
         const authRepository = new InMemoryAuthRepository()
         const uc5 = new UseCase5(usersRepository, authRepository)
 
+        // cria senha hasheada
         let password_hash = await bcrypt.hash('12345', 10)
 
+        // cria um usuário
         let user = new User({
             username: 'teste@teste.com',
             password: password_hash
@@ -20,6 +22,7 @@ describe('auth user', () => {
 
         await usersRepository.create(user)
 
+        // verifica se credenciais existem e retorna um token
         let token = await uc5.execute({
             username: user.username,
             password: "12345"
@@ -33,17 +36,18 @@ describe('auth user', () => {
         const authRepository = new InMemoryAuthRepository()
         const uc5 = new UseCase5(usersRepository, authRepository)
 
+        // cria senha hasheada
         let password_hash = await bcrypt.hash('12345', 10)
 
+        // cria um usuário
         let user = new User({
             username: 'teste@teste.com',
             password: password_hash
         })
 
         await usersRepository.create(user)
-
-        let token = await 
         
+        // credenciais diferentes
         expect(() => {
             return uc5.execute({
                 username: user.username,

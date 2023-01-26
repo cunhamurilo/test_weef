@@ -16,17 +16,20 @@ export class UseCase9 {
     async execute(request: UC9Request): Promise<UC9Response> {
         const { license_plate, token } = request
 
+        // verifica se o token é valido
         const checkToken = await this.authRepositoty.ensureAuthenticate('Bearer '+token || '')
         if(!checkToken){
             throw new NotAuthenticate()
         }
 
+        // verifica se o veiculo está estacionado
         const parkingAlreadExists = await this.parkingRepository.findByLicencePlate(license_plate);
     
         if (!parkingAlreadExists) {
             throw new CarNotExists()
         }
 
+        // calcula o valor a ser pago
         let calculated_parking = await this.parkingRepository.calculate_value(parkingAlreadExists)
 
         return calculated_parking.value_to_pay || 0

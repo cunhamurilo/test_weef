@@ -11,16 +11,20 @@ describe('Calculate value', () => {
         const authRepository = new InMemoryAuthRepository()
 
         const uc9 = new UseCase9(parkingRepository, authRepository)
+
+        // faz uma entrada de um veiculo com 20 minutos da hora atual
         await parkingRepository.entry(new Parking({
             license_plate: "ABC1234",
             entry_time: new Date(new Date().getTime() - 20*60000)
         }))
         
+        // ontem o token de autenticação
         let token = await authRepository.execute(new User({
             username: 'teste@teste.com',
             password: '12345'
         }))
 
+        // tenta obter o valor a ser pago
         let value_to_pay = await uc9.execute({
             license_plate: 'ABC1234',
             token: token.token
@@ -35,6 +39,7 @@ describe('Calculate value', () => {
 
         const uc9 = new UseCase9(parkingRepository, authRepository)
         
+        // tenta calcular o valor a ser pago sem autenticar
         expect(() => {
             return uc9.execute({
                 license_plate: 'ABC1234',

@@ -7,6 +7,7 @@ export class PrismaParkingRepository implements ParkingRepository {
 
     constructor(private prisma: PrismaClient) {}
     
+    // função que obtem o veiculo pela placa
     async findByLicencePlate(license_plate: string): Promise<Parking | null>{
         const parking = await this.prisma.parking.findFirst({
             where: {
@@ -21,6 +22,7 @@ export class PrismaParkingRepository implements ParkingRepository {
         return PrismaParkingMapper.toDomain(parking)
     }
 
+    // função que faz a entrada no veiculo no estacionamento
     async entry(parking:Parking): Promise<Parking> {
         const raw = PrismaParkingMapper.toPrisma(parking)
         
@@ -31,6 +33,7 @@ export class PrismaParkingRepository implements ParkingRepository {
         return PrismaParkingMapper.toDomain(entry)
     }
 
+    // função que faz a saida no veiculo no estacionamento
     async exit(parking: Parking): Promise<Parking> {
         const raw = PrismaParkingMapper.toPrisma(parking) 
         if(
@@ -50,6 +53,7 @@ export class PrismaParkingRepository implements ParkingRepository {
         return PrismaParkingMapper.toDomain(entry)
     }
 
+    // função que faz o pagamento do veiculo no estacionamento
     async payment(parking: Parking): Promise<Parking> {
         const raw = PrismaParkingMapper.toPrisma(parking) 
         
@@ -69,6 +73,7 @@ export class PrismaParkingRepository implements ParkingRepository {
         return PrismaParkingMapper.toDomain(entry)
     }
 
+    // função que calcula o valor do estacionamento de um veiculo
     async calculate_value(parking: Parking): Promise<Parking> {
         const raw = PrismaParkingMapper.toPrisma(parking)
         if(

@@ -9,6 +9,9 @@ import { UserViewModel } from "../view-models/user-view-model";
 const prisma = new PrismaClient()
 
 class UserController {
+
+  // controlador que verifica se um usuário já existe 
+  // para poder criar um usuário
   async createUser(request: Request, response: Response) {
     const { username, password } = request.body;
 
@@ -30,6 +33,7 @@ class UserController {
     return response.status(201).json(UserViewModel.toHTTP(user)); 
   }
 
+  // controlador que retorna os usuários pelo id
   async findByIdUser(request: Request, response: Response){
     const { id } = request.params;
     const userService = new PrismaUserRepository(prisma);
@@ -40,6 +44,7 @@ class UserController {
     return response.json({})
   }
 
+  // controlador que retorna todos os usuários
   async findManyUser(request: Request, response: Response) {
     const findUsersService = new PrismaUserRepository(prisma);
     const users = await findUsersService.findMany();
@@ -47,6 +52,7 @@ class UserController {
     return response.json(users.map(UserViewModel.toHTTP));
   }
 
+  // controlador que atualiza um usuário pelo id
   async updateUser(request: Request, response: Response){
     const { id } = request.params;
     const { username, password } = request.body;
@@ -70,6 +76,7 @@ class UserController {
     return response.status(200).json({ status: "Usuário atualizado"}); ; 
   }
 
+  // controlador que deleta um usuário pelo id
   async deleteUser(request: Request, response: Response){
     const { id } = request.params;
 

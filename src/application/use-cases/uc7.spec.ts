@@ -13,6 +13,8 @@ describe('Exit value', () => {
 
         const uc7 = new UseCase7(parkingRepository, authRepository)
 
+        // faz uma entrada de um veiculo com 20 minutos da hora atual
+        // com pagamento ja realizado
         await parkingRepository.entry(new Parking({
             license_plate: "ABC1234",
             entry_time: new Date(new Date().getTime() - 20*60000),
@@ -20,11 +22,13 @@ describe('Exit value', () => {
             value_to_pay: 25,
         }))
         
+        // obtem o token
         let token = await authRepository.execute(new User({
             username: 'teste@teste.com',
             password: '12345'
         }))
 
+        // anota a saido do veiculo e ve se tem desconto
         let discount = await uc7.execute({
             license_plate: 'ABC1234',
             exit_time: new Date(new Date().getTime() + 20*60000),
@@ -40,12 +44,15 @@ describe('Exit value', () => {
 
         const uc7 = new UseCase7(parkingRepository, authRepository)
 
+        // faz uma entrada de um veiculo com 20 minutos da hora atual
+        // sem pagamento
         await parkingRepository.entry(new Parking({
             license_plate: "ABC1234",
             entry_time: new Date(new Date().getTime() - 20*60000),
             value_to_pay: 25
         }))
         
+        // obtem o token
         let token = await authRepository.execute(new User({
             username: 'teste@teste.com',
             password: '12345'
@@ -66,14 +73,15 @@ describe('Exit value', () => {
 
         const uc7 = new UseCase7(parkingRepository, authRepository)
 
+        // faz uma entrada de um veiculo com 20 minutos da hora atual
         await parkingRepository.entry(new Parking({
             license_plate: "ABC1234",
-            entry_time: new Date(new Date().getTime() - 20*60000)
+            entry_time: new Date(new Date().getTime() - 20*60000),
+            amount_paid: 30,
+            value_to_pay: 20
         }))
         
-        await parkingRepository.calculate_value(parkingRepository.parking[0])
-        parkingRepository.parking[0].amount_paid = 30
-        
+        // verifica se deixa sair sem usuário autenticado
         expect(() => {
             return uc7.execute({
                 license_plate: 'ABC1234',

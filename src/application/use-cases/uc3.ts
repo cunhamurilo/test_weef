@@ -13,6 +13,7 @@ export class UseCase3 {
     async execute(request: UC3Request): Promise<UC3Response> {
         const { userId } = request
 
+        // verifica se usuário existe para deletar
         const userAlreadyExists = await this.usersRepository.findById(userId)
 
         if(!userAlreadyExists){

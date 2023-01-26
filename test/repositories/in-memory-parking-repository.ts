@@ -4,11 +4,13 @@ import { ParkingRepository } from "@application/repositories/parking-repository"
 export class InMemoryParkingRepository implements ParkingRepository {
     public parking: Parking[] = []
 
+    // função que imita a entrada de um veiculo no estacionamento
     async entry(parking: Parking): Promise<Parking> {
         this.parking.push(parking)
         return parking
     }
 
+    // função que imita a saida de um veiculo no estacionamento
     async exit(parking: Parking): Promise<Parking> {
         if(
             parking.exit_time !== null && parking.exit_time !== undefined && 
@@ -20,6 +22,7 @@ export class InMemoryParkingRepository implements ParkingRepository {
         return parking
     }
 
+    // função que imita o pagamento de um veiculo no estacionamento
     async payment(parking: Parking): Promise<Parking> {
         parking.discount = 0
         if(
@@ -31,6 +34,7 @@ export class InMemoryParkingRepository implements ParkingRepository {
         return parking
     }
 
+    // função que imita o calculo do custo de um veiculo no estacionamento
     async calculate_value(parking: Parking): Promise<Parking> {
         if( parking.entry_time !== null && parking.entry_time !== undefined){
             let difference = new Date().getTime() - parking.entry_time.getTime();
@@ -50,6 +54,7 @@ export class InMemoryParkingRepository implements ParkingRepository {
         return parking
     }
 
+    // função que imita encontrar um veiculo pela placa
     async findByLicencePlate(license_plate: string): Promise<Parking | null> {
         const park = this.parking.find((item) => item.license_plate === license_plate)
 
@@ -57,7 +62,5 @@ export class InMemoryParkingRepository implements ParkingRepository {
             return null
         
         return park
-    }
-    
-    
+    }   
 }

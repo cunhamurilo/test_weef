@@ -6,6 +6,7 @@ async function onInit() {
     await prisma.$connect();
 }
  
+// inicializa a coneção com o banco
 onInit().then(() => {
     console.log('Connect database')
 })
