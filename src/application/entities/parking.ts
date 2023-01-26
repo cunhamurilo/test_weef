@@ -16,7 +16,7 @@ export class Parking {
     private props: ParkingProps;
     private _id: number;
 
-    constructor(props: Replace<ParkingProps, {created_at?: Date, updated_at: Date}>, 
+    constructor(props: Replace<ParkingProps, {created_at?: Date, updated_at?: Date}>, 
         id?: number
     ) {
         this._id = id ?? 0
